@@ -1,63 +1,37 @@
-window.onload = () => { canvasApp() }
+window.onload = () => { new Game(); }
 
-function canvasApp() {
-    var theCanvas = document.getElementById("canvas");
-    if (!theCanvas || !theCanvas.getContext) {
-        return;
-    }
-    var context = theCanvas.getContext("2d");
-    if (!context) {
-        return;
-    }
+class Game {
+    constructor() {
+        // Configuration
+        const FRAME_RATE = 30;
 
-    const FRAME_RATE = 30;
-    var intervalTime = 1000 / FRAME_RATE;
+        // Get canvas & context
+        this.canvasGame = document.getElementById("canvas");
+        this.context = this.canvasGame.getContext("2d");
 
-    var shipState = 0;
+        // Load assets
+        this.loadAssets();
 
-    gameLoop();
-
-    function gameLoop() {
-        drawScreen();
-        window.setTimeout(gameLoop, intervalTime);
+        // Game loop
+        var intervalTime = 1000 / FRAME_RATE;
+        setInterval(() => {
+            this.updateScene();
+        }, intervalTime);
     }
 
-    function drawScreen() {
+    loadAssets() {
+        this.player = new Ship(this.context);
+    }
 
-        shipState++;
-        if (shipState > 1) {
-            shipState = 0;
-        }
-
+    updateScene() {
         // draw background and text
-        context.fillStyle = '#000000';
-        context.fillRect(0, 0, 500, 500);
-        context.fillStyle = '#ffffff';
-        context.font = '20px sans-serif';
-        context.textBaseline = 'top';
-        context.fillText("Player Ship - Static", 0, 480);
+        this.context.fillStyle = '#000000';
+        this.context.fillRect(0, 0, 800, 800);
+        this.context.fillStyle = '#ffffff';
+        this.context.font = '20px sans-serif';
+        this.context.textBaseline = 'top';
+        this.context.fillText("Player Ship - Static", 0, 480);
 
-        //drawShip
-        context.strokeStyle = '#ffffff';
-        context.beginPath();
-        context.moveTo(10, 0);
-        context.lineTo(19, 19);
-        context.lineTo(10, 9);
-        context.moveTo(9, 9);
-        context.lineTo(0, 19);
-        context.lineTo(9, 0);
-
-        //draw thrust
-        if (shipState == 1) {
-            context.moveTo(8, 13);
-            context.lineTo(11, 13);
-            context.moveTo(9, 14);
-            context.lineTo(9, 18);
-            context.moveTo(10, 14);
-            context.lineTo(10, 18);
-        }
-
-        context.stroke();
-        context.closePath();
+        this.player.draw();
     }
 }
