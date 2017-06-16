@@ -17,6 +17,19 @@ class Game {
         setInterval(() => {
             this.updateScene();
         }, intervalTime);
+        
+        this.keyPressList = [];
+
+        document.onkeydown = function(e) {
+            console.log(e.keyCode);
+            //this.keyPressList[e.keyCode] = true;
+        };
+
+        document.onkeyup = function(e) {
+            //console.log(e.keyCode + "up");
+            //this.keyPressList[e.keyCode] = false;
+        };
+
     }
 
     loadAssets() {
