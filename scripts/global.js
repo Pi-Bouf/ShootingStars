@@ -5,8 +5,15 @@ class Game {
         // Configuration
         const FRAME_RATE = 30;
 
+        var doc = document.getElementsByTagName("body")[0];
+        this.canvasGame = document.createElement("canvas");
+        this.canvasGame.setAttribute("id", "canvas");
+        this.canvasGame.setAttribute("width", window.innerWidth);
+        this.canvasGame.setAttribute("height", window.innerHeight);
+        doc.appendChild(this.canvasGame);
+
         // Get canvas & context
-        this.canvasGame = document.getElementById("canvas");
+        //this.canvasGame = document.getElementById("canvas");
         this.context = this.canvasGame.getContext("2d");
 
         // Load assets
@@ -32,20 +39,19 @@ class Game {
 
     loadAssets() {
         this.player = new Ship(this.context, 130, 130);
-        this.player_2 = new Ship(this.context, 230, 330);
     }
 
     updateScene() {
         // draw background and text
         this.context.fillStyle = '#000000';
-        this.context.fillRect(0, 0, 800, 800);
+        this.context.fillRect(0, 0, window.innerWidth, window.innerHeight);
         this.context.fillStyle = '#ffffff';
         this.context.font = '20px sans-serif';
         this.context.textBaseline = 'top';
-        this.context.fillText("Player Ship - Static", 0, 480);
+        let text = "State: OK";
+        this.context.fillText(text, (window.innerWidth - this.context.measureText(text).width) / 2, 10);
 
         // Draw player
         this.player.draw(this.keyPressList);
-        this.player_2.draw(this.keyPressList);
     }
 }
