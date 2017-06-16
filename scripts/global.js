@@ -18,22 +18,21 @@ class Game {
             this.updateScene();
         }, intervalTime);
         
+        // Input event
         this.keyPressList = [];
-
-        document.onkeydown = function(e) {
-            console.log(e.keyCode);
-            //this.keyPressList[e.keyCode] = true;
+        document.onkeydown = (e) => {
+            //console.log(e.keyCode);
+            this.keyPressList[e.keyCode] = true;
         };
-
-        document.onkeyup = function(e) {
-            //console.log(e.keyCode + "up");
-            //this.keyPressList[e.keyCode] = false;
+        document.onkeyup = (e) => {
+            this.keyPressList[e.keyCode] = false;
         };
 
     }
 
     loadAssets() {
-        this.player = new Ship(this.context);
+        this.player = new Ship(this.context, 130, 130);
+        this.player_2 = new Ship(this.context, 230, 330);
     }
 
     updateScene() {
@@ -45,6 +44,8 @@ class Game {
         this.context.textBaseline = 'top';
         this.context.fillText("Player Ship - Static", 0, 480);
 
-        this.player.draw();
+        // Draw player
+        this.player.draw(this.keyPressList);
+        this.player_2.draw(this.keyPressList);
     }
 }
