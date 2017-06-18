@@ -1,5 +1,7 @@
 window.onload = () => { new Game(); }
 
+var bulletList = Array();
+
 class Game {
     constructor() {
         // Configuration
@@ -28,13 +30,12 @@ class Game {
         // Input event
         this.keyPressList = [];
         document.onkeydown = (e) => {
-            //console.log(e.keyCode);
+            console.log(e.keyCode);
             this.keyPressList[e.keyCode] = true;
         };
         document.onkeyup = (e) => {
             this.keyPressList[e.keyCode] = false;
         };
-
     }
 
     loadAssets() {
@@ -53,5 +54,9 @@ class Game {
 
         // Draw player
         this.player.draw(this.keyPressList);
+
+        bulletList.forEach(function(element) {
+            element.draw();
+        }, this);
     }
 }

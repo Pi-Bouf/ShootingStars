@@ -6,23 +6,57 @@ class Ship {
         this.y = y;
         this.height = 28;
         this.width = 10;
-        this.scale = 1.5;
+        this.facingX = 0;
+        this.facingY = 0;
+        this.movingX = 0;
+        this.movingY = 0;
+        this.scale = 3;
         this.rotation = 0;
+        this.angleInRadians = 0;
         this.rotationVelocity = 5;
+        this.thrustAcceleration = 0.1;
+        this.maximumVelocity = 2;
     }
 
     draw(keyPressList) {
+        this.angleInRadians = this.rotation * Math.PI / 180;
 
-        if(keyPressList[37] == true) {
+        // Forward
+        if (keyPressList[38] == true) {
+            this.facingX = Math.cos(this.angleInRadians);
+            this.facingY = Math.sin(this.angleInRadians);
+
+            this.movingY -= this.thrustAcceleration * this.facingX;
+            this.movingX += this.thrustAcceleration * this.facingY;
+        }
+
+        // Backward
+        if (keyPressList[40] == true) {
+            this.facingX = Math.cos(this.angleInRadians);
+            this.facingY = Math.sin(this.angleInRadians);
+
+            this.movingY += this.thrustAcceleration * this.facingX;
+            this.movingX -= this.thrustAcceleration * this.facingY;
+        }
+
+        // Left
+        if (keyPressList[37] == true) {
             this.rotation -= this.rotationVelocity;
+            if (this.rotation < 0) {
+                this.rotation = 360;
+            }
         }
 
-        if(keyPressList[39] == true) {
+        // Right
+        if (keyPressList[39] == true) {
             this.rotation += this.rotationVelocity;
+            if (this.rotation > 360) {
+                this.rotation = 0;
+            }
         }
 
-        var angleInRadians = this.rotation * Math.PI / 180;
-
+        this.x += this.movingX;
+        this.y += this.movingY;
 
         this.context.save();
         this.context.scale(this.scale, this.scale);
@@ -65,8 +99,8 @@ class Ship {
         this.context.fillRect(this.x + 8, this.y + 17, 1, 1);
 
         // If forward
-        if(keyPressList[38] == true) {
-            if(this.shipState == 1) {
+        if (keyPressList[38] == true || keyPressList[40] == true) {
+            if (this.shipState == 1) {
                 this.context.fillStyle = "#ff3141";
                 this.context.fillRect(this.x + 3, this.y + 27, 1, 4);
                 this.context.fillRect(this.x + 7, this.y + 27, 1, 4);
