@@ -1,11 +1,21 @@
 window.onload = () => { new Game(); }
 
 var bulletList = Array();
+var explosionList = Array();
 
 class Game {
     constructor() {
+
+         var socket = io('http://localhost:3575');
+         socket.on("connect", () => {
+            socket.emit("@c", "?");
+         });
+         socket.on("@c", (data) => {
+             alert(data);
+         })
+
         // Configuration
-        const FRAME_RATE = 10;
+        const FRAME_RATE = 60;
 
         var doc = document.getElementsByTagName("body")[0];
         this.canvasGame = document.createElement("canvas");
@@ -35,6 +45,7 @@ class Game {
         document.onkeyup = (e) => {
             this.keyPressList[e.keyCode] = false;
         };
+
     }
 
     loadAssets() {
@@ -46,11 +57,7 @@ class Game {
         this.context.fillStyle = '#000000';
         this.context.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-
         // Draw player
         this.player.draw(this.keyPressList);
-        bulletList.forEach(function(element) {
-            element.draw();
-        }, this);
     }
 }

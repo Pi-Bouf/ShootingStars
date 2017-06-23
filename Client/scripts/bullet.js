@@ -1,17 +1,16 @@
 class Bullet {
-    constructor(x, y, facingX, facingY, velocity, context) {
-        this.x = x;
-        this.y = y;
-        this.facingX = facingX;
-        this.facingY = facingY;
+    constructor(facingX, facingY, velocity, context) {
+        this.x = facingX;
+        this.y = facingY;
         this.velocity = velocity;
         this.context = context
         this.number = 0;
+        console.log(this.x, this.y);
     }
 
     draw() {
-        this.x += this.velocity * this.facingX;
-        this.y -= this.velocity * this.facingY;
+        this.x *= this.velocity;
+        this.y *= this.velocity;
 
         this.context.save();
 

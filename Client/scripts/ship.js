@@ -10,11 +10,11 @@ class Ship {
         this.facingY = 0;
         this.movingX = 0;
         this.movingY = 0;
-        this.scale = 3;
+        this.scale = 2;
         this.rotation = 0;
         this.angleInRadians = 0;
-        this.rotationVelocity = 5;
-        this.thrustAcceleration = 0.1;
+        this.rotationVelocity = 2;
+        this.thrustAcceleration = 0.02;
         this.maximumVelocity = 2;
     }
 
@@ -22,7 +22,7 @@ class Ship {
         this.angleInRadians = this.rotation * Math.PI / 180;
 
         // Forward
-        if (keyPressList[104] == true) {
+        if (keyPressList[38] == true) {
             this.facingX = Math.cos(this.angleInRadians);
             this.facingY = Math.sin(this.angleInRadians);
 
@@ -31,7 +31,7 @@ class Ship {
         }
 
         // Left
-        if (keyPressList[100] == true) {
+        if (keyPressList[37] == true) {
             this.rotation -= this.rotationVelocity;
             if (this.rotation < 0) {
                 this.rotation = 360;
@@ -39,18 +39,14 @@ class Ship {
         }
 
         // Right
-        if (keyPressList[102] == true) {
+        if (keyPressList[39] == true) {
             this.rotation += this.rotationVelocity;
             if (this.rotation > 360) {
                 this.rotation = 0;
             }
         }
 
-        let message = "";
-        // Bullet
-        if(keyPressList[96] == true) {
-            bulletList.push(new Bullet(this.x, this.y, this.facingX, this.facingY, 10, this.context))
-        }
+        let message = "State: OK !";
 
         this.x += this.movingX;
         this.y += this.movingY;
@@ -96,24 +92,26 @@ class Ship {
         this.context.fillRect(this.x + 8, this.y + 17, 1, 1);
 
         // If forward
-        if (this.shipState == 1 && keyPressList[38] == true) {
-            this.context.fillStyle = "#ff3141";
-            this.context.fillRect(this.x + 3, this.y + 27, 1, 4);
-            this.context.fillRect(this.x + 7, this.y + 27, 1, 4);
-            this.context.fillRect(this.x + 4, this.y + 30, 3, 2);
-            this.context.fillRect(this.x + 5, this.y + 32, 1, 1);
+        if(keyPressList[38] == true) {
+            if (this.shipState == 1) {
+                this.context.fillStyle = "#ff3141";
+                this.context.fillRect(this.x + 3, this.y + 27, 1, 4);
+                this.context.fillRect(this.x + 7, this.y + 27, 1, 4);
+                this.context.fillRect(this.x + 4, this.y + 30, 3, 2);
+                this.context.fillRect(this.x + 5, this.y + 32, 1, 1);
 
-            this.context.fillStyle = "#e1c03c";
-            this.context.fillRect(this.x + 4, this.y + 29, 3, 1);
-            this.context.fillRect(this.x + 5, this.y + 30, 1, 1);
+                this.context.fillStyle = "#e1c03c";
+                this.context.fillRect(this.x + 4, this.y + 29, 3, 1);
+                this.context.fillRect(this.x + 5, this.y + 30, 1, 1);
 
-            this.context.fillStyle = "#0080b5";
-            this.context.fillRect(this.x + 4, this.y + 28, 1, 1);
-            this.context.fillRect(this.x + 6, this.y + 28, 1, 1);
+                this.context.fillStyle = "#0080b5";
+                this.context.fillRect(this.x + 4, this.y + 28, 1, 1);
+                this.context.fillRect(this.x + 6, this.y + 28, 1, 1);
 
-            this.shipState = 0;
-        } else {
-            this.shipState++;
+                this.shipState = 0;
+            } else {
+                this.shipState++;
+            }
         }
 
         this.context.restore();
