@@ -19,6 +19,10 @@ class Ship {
     }
 
     draw(keyPressList) {
+
+        let message = "State: OK !";
+
+
         this.angleInRadians = this.rotation * Math.PI / 180;
 
         // Forward
@@ -46,7 +50,10 @@ class Ship {
             }
         }
 
-        let message = "State: OK !";
+        // Fire shots
+        if(keyPressList[32] == true) {
+            message = "FIRE !";
+        }
 
         this.x += this.movingX;
         this.y += this.movingY;

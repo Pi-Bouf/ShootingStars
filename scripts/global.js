@@ -5,15 +5,6 @@ var explosionList = Array();
 
 class Game {
     constructor() {
-
-         var socket = io('http://localhost:3575');
-         socket.on("connect", () => {
-            socket.emit("@c", "?");
-         });
-         socket.on("@c", (data) => {
-             alert(data);
-         })
-
         // Configuration
         const FRAME_RATE = 60;
 
@@ -21,7 +12,7 @@ class Game {
         this.canvasGame = document.createElement("canvas");
         this.canvasGame.setAttribute("id", "canvas");
         this.canvasGame.setAttribute("width", window.innerWidth);
-        this.canvasGame.setAttribute("height", window.innerHeight);
+        this.canvasGame.setAttribute("height", window.innerHeight - 20);
         doc.appendChild(this.canvasGame);
 
         // Get canvas & context
