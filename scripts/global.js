@@ -11,8 +11,12 @@ class Game {
         var doc = document.getElementsByTagName("body")[0];
         this.canvasGame = document.createElement("canvas");
         this.canvasGame.setAttribute("id", "canvas");
-        this.canvasGame.setAttribute("width", window.innerWidth);
-        this.canvasGame.setAttribute("height", window.innerHeight - 20);
+        //this.canvasGame.setAttribute("width", window.innerWidth);
+        //this.canvasGame.setAttribute("height", window.innerHeight - 20);
+
+        this.canvasGame.setAttribute("width", 400);
+        this.canvasGame.setAttribute("height", 400);
+
         doc.appendChild(this.canvasGame);
 
         // Get canvas & context
@@ -50,5 +54,9 @@ class Game {
 
         // Draw player
         this.player.draw(this.keyPressList);
+
+        bulletList.forEach((element) => {
+            element.draw();
+        })
     }
 }

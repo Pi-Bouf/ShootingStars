@@ -52,7 +52,7 @@ class Ship {
 
         // Fire shots
         if(keyPressList[32] == true) {
-            message = "FIRE !";
+            bulletList.push(new Bullet(100, 100, 1, this.context));
         }
 
         this.x += this.movingX;
